@@ -1,0 +1,1 @@
+python main.py optim --content-image images/content/venice-boat.jpg --style-image images/21styles/candy.jpg --output-image images/outputs/test.jpg
