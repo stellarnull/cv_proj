@@ -75,6 +75,8 @@ def add_imagenet_mean_batch(batch):
     mean[:, 0, :, :] = 103.939
     mean[:, 1, :, :] = 116.779
     mean[:, 2, :, :] = 123.680
+    print(tensortype)
+    print(type(batch))
     return batch + Variable(mean)
 
 def imagenet_clamp_batch(batch, low, high):
