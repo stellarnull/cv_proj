@@ -99,7 +99,7 @@ def optimize(args):
         total_loss = content_loss + style_loss
         total_loss.backward()
         optimizer.step()
-        tbar.set_description(total_loss.data.cpu().numpy()[0])
+        # tbar.set_description(total_loss.data.cpu().numpy()[0])
     # save the image    
     output = utils.add_imagenet_mean_batch(output)
     utils.tensor_save_bgrimage(output.data[0], args.output_image, args.cuda)
