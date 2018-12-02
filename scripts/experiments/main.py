@@ -241,8 +241,17 @@ def evaluate(args):
     style = style.unsqueeze(0)    
     style = utils.preprocess_batch(style)
 
+
+    model_dict = torch.load(args.model)
+    model_dict_clone = model_dict.copy() # We can't mutate while iterating
+
+    for key, value in model_dict_clone.items():
+        if key.endswith(('running_mean', 'running_var')):
+            del model_dict[key]
+
+    
     style_model = Net(ngf=args.ngf)
-    style_model.load_state_dict(torch.load(args.model), False)
+    style_model.load_state_dict(model_dict, False)
 
     if args.cuda:
         style_model.cuda()
@@ -268,7 +277,7 @@ def fast_evaluate(args, basedir, contents, idx = 0):
         if key.endswith(('running_mean', 'running_var')):
             del model_dict[key]
 
-    
+
     style_model = Net(ngf=args.ngf)
     style_model.load_state_dict(model_dict, False)
     style_model.eval()
