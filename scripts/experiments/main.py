@@ -242,7 +242,7 @@ def evaluate(args):
     style = utils.preprocess_batch(style)
 
     style_model = Net(ngf=args.ngf)
-    style_model.load_state_dict(torch.load(args.model), False)
+    style_model.load_state_dict(torch.load(args.model), True) # modofied to True
 
     if args.cuda:
         style_model.cuda()
