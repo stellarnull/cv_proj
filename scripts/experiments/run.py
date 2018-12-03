@@ -28,10 +28,6 @@ if __name__ == "__main__":
     args = Options_Run().parse()
     if args.subcommand is None:
         raise ValueError("ERROR: specify the algorithm to be used")
-    if args.subcommand == "ns":
-        subcommand = "optim"
-    elif args.subcommand == "msg":
-        subcommand = "eval"
     if args.style != 9 and args.style != 21:
         raise ValueError("ERROR: wrong style catagory")
     style_dir_name = "images/" + str(args.style) + "styles/"
@@ -42,7 +38,10 @@ if __name__ == "__main__":
         style_path = os.path.join('%s%s' % (style_dir_name, style_file))
         for content_file in content_dir_list:
             content_path = os.path.join('%s%s' % (content_dir_name, content_file))
-            cmd = "python main.py " + subcommand + " --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_" + args.subcommand + ".jpg"
+            if args.subcommand == "ns":
+                cmd = "python main.py optim --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_ns.jpg"
+            elif args.subcommand == "msg":
+                cmd = "python main.py eval --model models/21styles.model --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_msg.jpg"
             print(cmd)
             os.system(cmd)
 
