@@ -44,7 +44,7 @@ if __name__ == "__main__":
             content_path = os.path.join('%s%s' % (content_dir_name, content_file))
             cmd = "python main.py " + subcommand + " --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_" + args.subcommand + ".jpg"
             print(cmd)
-            # os.system(cmd)
+            os.system(cmd)
 
 
 
