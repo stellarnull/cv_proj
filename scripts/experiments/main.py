@@ -96,7 +96,7 @@ def optimize(args):
             gram_s = Variable(gram_style[m].data, requires_grad=False)
             style_loss += args.style_weight * mse_loss(gram_y, gram_s)
 
-        total_loss = content_loss + style_loss
+        total_loss = args.alpha * content_loss + style_loss
         total_loss.backward()
         optimizer.step()
         # tbar.set_description(total_loss.data.cpu().numpy()[0])
@@ -249,7 +249,7 @@ def evaluate(args):
         if key.endswith(('running_mean', 'running_var')):
             del model_dict[key]
 
-    
+
     style_model = Net(ngf=args.ngf)
     style_model.load_state_dict(model_dict, False)
 

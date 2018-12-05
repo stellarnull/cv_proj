@@ -69,7 +69,9 @@ class Options():
         optim_arg.add_argument("--lr", type=float, default=1e1,
                                 help="learning rate, default is 0.001")
         optim_arg.add_argument("--log-interval", type=int, default=50,
-                                help="number of images after which the training loss is logged, default is 50")    
+                                help="number of images after which the training loss is logged, default is 50")   
+        optim_arg.add_argument("--alpha", type=float, default=1.0,
+                                help="coefficient of content loss")  
 
         # evaluation args
         eval_arg = subparsers.add_parser("eval", help="parser for evaluation/stylizing arguments")
