@@ -96,7 +96,9 @@ def optimize(args):
             gram_s = Variable(gram_style[m].data, requires_grad=False)
             style_loss += args.style_weight * mse_loss(gram_y, gram_s)
 
-        total_loss = args.alpha * content_loss + style_loss
+        alpha = 2 * args.ratio / (args.ratio + 1)
+        beta = 2 / (args.ratio + 1)
+        total_loss = args.alpha * content_loss + beta * style_loss
         total_loss.backward()
         optimizer.step()
         # tbar.set_description(total_loss.data.cpu().numpy()[0])
