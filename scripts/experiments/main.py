@@ -98,7 +98,7 @@ def optimize(args):
 
         alpha = 2 * args.ratio / (args.ratio + 1)
         beta = 2 / (args.ratio + 1)
-        total_loss = args.alpha * content_loss + beta * style_loss
+        total_loss = alpha * content_loss + beta * style_loss
         total_loss.backward()
         optimizer.step()
         # tbar.set_description(total_loss.data.cpu().numpy()[0])
