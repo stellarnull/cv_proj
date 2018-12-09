@@ -78,7 +78,7 @@ def optimize(args):
     f_xc_c = Variable(features_content[3].data, requires_grad=False)
     features_style = vgg(style_image)
     # gram_style = [utils.gram_matrix(y) for y in features_style]
-    gram_style = [utils.gram_matrix(features_style[2])]
+    gram_style = [utils.gram_matrix(features_style[3])]
     # init optimizer
     output = Variable(content_image.data, requires_grad=True)
     optimizer = Adam([output], lr=args.lr)
@@ -96,7 +96,7 @@ def optimize(args):
         #     gram_y = utils.gram_matrix(features_y[m])
         #     gram_s = Variable(gram_style[m].data, requires_grad=False)
         #     style_loss += args.style_weight * mse_loss(gram_y, gram_s)
-        gram_y = utils.gram_matrix(features_y[2])
+        gram_y = utils.gram_matrix(features_y[3])
         gram_s = Variable(gram_style[0].data, requires_grad=False)
         style_loss += args.style_weight * mse_loss(gram_y, gram_s)
 
