@@ -97,7 +97,7 @@ def optimize(args):
         #     gram_s = Variable(gram_style[m].data, requires_grad=False)
         #     style_loss += args.style_weight * mse_loss(gram_y, gram_s)
         gram_y = utils.gram_matrix(features_y[1])
-        gram_s = Variable(gram_style[1].data, requires_grad=False)
+        gram_s = Variable(gram_style[0].data, requires_grad=False)
         style_loss += args.style_weight * mse_loss(gram_y, gram_s)
 
         alpha = 2 * args.ratio / (args.ratio + 1)
