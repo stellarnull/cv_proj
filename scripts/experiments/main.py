@@ -75,7 +75,7 @@ def optimize(args):
         style_image = style_image.cuda()
         vgg.cuda()
     features_content = vgg(content_image)
-    f_xc_c = Variable(features_content[1].data, requires_grad=False)
+    f_xc_c = Variable(features_content[0].data, requires_grad=False)
     features_style = vgg(style_image)
     gram_style = [utils.gram_matrix(y) for y in features_style]
     # init optimizer
