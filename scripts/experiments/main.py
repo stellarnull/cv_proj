@@ -75,10 +75,10 @@ def optimize(args):
         style_image = style_image.cuda()
         vgg.cuda()
     features_content = vgg(content_image)
-    f_xc_c = Variable(features_content[3].data, requires_grad=False)
+    f_xc_c = Variable(features_content[1].data, requires_grad=False)
     features_style = vgg(style_image)
-    # gram_style = [utils.gram_matrix(y) for y in features_style]
-    gram_style = [utils.gram_matrix(features_style[3])]
+    gram_style = [utils.gram_matrix(y) for y in features_style]
+    # gram_style = [utils.gram_matrix(features_style[3])]
     # init optimizer
     output = Variable(content_image.data, requires_grad=True)
     optimizer = Adam([output], lr=args.lr)
@@ -89,16 +89,16 @@ def optimize(args):
         utils.imagenet_clamp_batch(output, 0, 255)
         optimizer.zero_grad()
         features_y = vgg(output)
-        content_loss = args.content_weight * mse_loss(features_y[3], f_xc_c)
+        content_loss = args.content_weight * mse_loss(features_y[1], f_xc_c)
 
         style_loss = 0.
-        # for m in range(len(features_y)):
-        #     gram_y = utils.gram_matrix(features_y[m])
-        #     gram_s = Variable(gram_style[m].data, requires_grad=False)
-        #     style_loss += args.style_weight * mse_loss(gram_y, gram_s)
-        gram_y = utils.gram_matrix(features_y[3])
-        gram_s = Variable(gram_style[0].data, requires_grad=False)
-        style_loss += args.style_weight * mse_loss(gram_y, gram_s)
+        for m in range(len(features_y)):
+            gram_y = utils.gram_matrix(features_y[m])
+            gram_s = Variable(gram_style[m].data, requires_grad=False)
+            style_loss += args.style_weight * mse_loss(gram_y, gram_s)
+        # gram_y = utils.gram_matrix(features_y[3])
+        # gram_s = Variable(gram_style[0].data, requires_grad=False)
+        # style_loss += args.style_weight * mse_loss(gram_y, gram_s)
 
         alpha = 2 * args.ratio / (args.ratio + 1)
         beta = 2 / (args.ratio + 1)
