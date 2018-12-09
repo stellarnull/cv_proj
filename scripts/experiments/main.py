@@ -88,7 +88,7 @@ def optimize(args):
         utils.imagenet_clamp_batch(output, 0, 255)
         optimizer.zero_grad()
         features_y = vgg(output)
-        content_loss = args.content_weight * mse_loss(features_y[1], f_xc_c)
+        content_loss = args.content_weight * mse_loss(features_y[0], f_xc_c)
 
         style_loss = 0.
         for m in range(len(features_y)):
