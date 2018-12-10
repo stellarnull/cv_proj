@@ -39,9 +39,9 @@ if __name__ == "__main__":
         for content_file in content_dir_list:
             content_path = os.path.join('%s%s' % (content_dir_name, content_file))
             if args.subcommand == "ns":
-                cmd = "python main.py optim --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_ns.jpg"
+                cmd = "python ns.py --content-img " + content_path + " --style-img " + style_path + " --output-img images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_ns.jpg"
             elif args.subcommand == "msg":
-                cmd = "python main.py eval --model models/21styles.model --content-image " + content_path + " --style-image " + style_path + " --output-image images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_msg.jpg"
+                cmd = "python msg.py --model models/21styles.model --content-img " + content_path + " --style-img " + style_path + " --output-img images/outputs/" + content_file[:-4] + "_" + style_file[:-4] + "_msg.jpg"
             print(cmd)
             os.system(cmd)
 

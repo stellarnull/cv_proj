@@ -54,7 +54,8 @@ def evaluate(args):
             del model_dict[key]
 
 
-    style_model = Net(128)
+    style_model = Net(ngf=128)
+    print(style_model)
     style_model.load_state_dict(model_dict, False)
 
     if torch.cuda.is_available():
