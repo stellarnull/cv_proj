@@ -1,3 +1,5 @@
+# reference: https://github.com/zhanghang1989/PyTorch-Multi-Style-Transfer
+
 import os
 import sys
 import argparse
