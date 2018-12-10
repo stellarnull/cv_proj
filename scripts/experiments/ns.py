@@ -51,7 +51,7 @@ def ns_run(args):
     # load the pre-trained vgg network
     vgg = Vgg16()
     utils.init_vgg16("models/")
-    vgg.load_state_dict(torch.load(os.path.join(args.vgg_model_dir, "vgg16.weight")))
+    vgg.load_state_dict(torch.load(os.path.join("models/", "vgg16.weight")))
     if torch.cuda.is_available():
         content_img = content_img.cuda()
         style_img = style_img.cuda()
