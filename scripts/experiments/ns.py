@@ -91,7 +91,7 @@ def ns_run(args):
         # bar.set_description(total_loss.data.cpu().numpy()[0])
     # save the image to output file   
     output = utils.add_imagenet_mean_batch(output)
-    utils.tensor_save_bgrimage(output.data[0], args.output_image, args.cuda)
+    utils.tensor_save_bgrimage(output.data[0], args.output_img, args.cuda)
 
 if __name__ == "__main__":
    main()
