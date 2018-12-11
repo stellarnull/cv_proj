@@ -49,16 +49,6 @@ Columbia University\\
 %\thispagestyle{empty}
 
 %%%%%%%%% ABSTRACT
-\begin{abstract}
-   The ABSTRACT is to be in fully-justified italicized text, at the top
-   of the left-hand column, below the author and affiliation
-   information. Use the word ``Abstract'' as the title, in 12-point
-   Times, boldface type, centered relative to the column, initially
-   capitalized. The abstract is to be in 10-point, single-spaced type.
-   Leave two blank lines after the Abstract, then begin the main text.
-   Look at previous CVPR abstracts to get a feel for style and length.
-\end{abstract}
-
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
@@ -132,7 +122,7 @@ Siamese Network and Transformation Network. In Siamese Network \cite{Authors07} 
     \begin{align}
         \hat X^l = [F^l(C)^T W G^l(S)]^T
     \end{align}
-    \item Upsample the output to recover the detail information from downsampled feature maps through upsampling residual block \cite{Authors08}
+    \item Upsample the output to recover the detail information from downsampled feature maps through upsampling residual block \cite{Authors08}.
     \item The output that comes out of the above processes is similar to the output image that to be generated in section 3.1. The output and original content and style image then go through the loss network (the pre-trained VGG network). Next, compute content loss and style loss and update the parameters of MSG-Net backward based on the gradient of the loss.
 \end{enumerate}
 
@@ -146,7 +136,7 @@ When implementing the style transfer algorithm, we initialize the output $X$ as 
 
 When training MSG-Net, we initialize our network with customized number of generator filter channels and the pre-trained VGG-16 network. For each iteration, we minimize a weighted combination of the style and content differences of the generator network outputs and the targets for a given pre-trained loss network. Learning proceeds by sampling content images and style images and then adjusting the parameters of the generator in order to minimize the loss.
 
-After the MSG network is trained, given a new content or style image, we just load the model and get the output image. 
+After the MSG network is trained, given a new content or style image, we just load the model and get the output. 
 
 
 %-------------------------------------------------------------------------
@@ -158,7 +148,7 @@ Gram matrix explores the correlation between any two of the features. It elimina
 
 %-------------------------------------------------------------------------
 \subsection{How improvements build up}
-During the implementation, we find it takes about 30 seconds to transfer the style of an image onto the content of another with the algorithm in Gatys \etal~\cite{Authors01}. If there are 1000 style transfer tasks, it might need over 8 hours, which is sort of inefficient. Recall that the algorithm is taking two source images and the output image as input, and then update the output through the forward and backward pass of the pre-trained VGG-Net. That is, every time what it trains is the output image. It is naturally to think what if train a model instead of an image. Then the huge computation burden is taken to model training. Although it still needs time for updating the parameters of the model, the style transfer task can complete instantly with the trained model. Therefore, it is easier to understand the MSG-Net with CoMatch Layer and Upsample Convolution in \cite{Authors04}.
+During the implementation, we find it takes about 30 seconds to transfer the style of an image onto the content of another with the algorithm in Gatys \etal~\cite{Authors01}. If there are 1000 style transfer tasks, it might need over 8 hours, which is sort of inefficient. Recall that the algorithm is taking two source images and the output image as input, and then update the output through the forward and backward pass of the pre-trained VGG-Net. That is, every time what it trains is the output image. It is naturally to think what if train a model instead of an image. Then the huge computation burden is taken to model learning. Although it still needs time for updating the parameters of the model, the style transfer task can complete quickly with the trained model. Therefore, it is easier to understand the MSG-Net with CoMatch Layer and Upsample Convolution in \cite{Authors04}.
 
 
 %------------------------------------------------------------------------
@@ -204,8 +194,7 @@ First, we want to analyze the influence of different weight put on the content i
 \end{figure}
 
 
-
-Since we construct a multi-scale representation that includes multiple layers of the neural network to represent the style, the number and position of these layers determines the local scale on which the style is matched, leading to different visual experiences. We find that matching the style representations up to higher layers in the network preserves local images structures an increasingly large scale, leading to a smoother and more continuous visual experience. Thus, the visually most appealing images are usually created by matching the style representation up to high layers in the network. Figure \ref{fig_layers} shows the result comparison.
+Since we construct a multi-scale representation that includes multiple layers of the neural network to represent the style, the number and position of these layers determines the local scale on which the style is matched, leading to different visual experiences. We find that matching the style representations up to higher layers in the network preserves local images structures an increasingly large scale, leading to a smoother and more continuous visual experience. Thus, the visually most appealing images are usually created by matching the style representation up to high layers in the network. Compared to the first synthetic in Figure \ref{fig_ab} which combines the style on Conv1\_2, Conv2\_2, Conv3\_3 and Conv4\_3 layers, the synthetics in Figure \ref{fig_layers} that only combine single style of artwork perform unsatisfying. The multi-scale representation result in smoother output than single representation. It also captures more comprehensive styles.
 
 \begin{figure}[t]
 \begin{center}
@@ -219,7 +208,7 @@ Since we construct a multi-scale representation that includes multiple layers of
 
 \subsection{MSG network}
 
-For the MSG network, we train the network for different epochs and then utilize them to produce new output images. The results of different training-level networks are shown in Figure \ref{fig_msg}.
+For the MSG network, we train the network for different epochs and then utilize them to produce new output images. The results of different training-level networks are shown in Figure \ref{fig_msg}. MSG-Net can reach acceptable outcome with training at least 10 epochs. 
 
 \begin{figure}[t]
 \begin{center}
@@ -233,7 +222,7 @@ For the MSG network, we train the network for different epochs and then utilize 
 
 \subsection{Result Comparison}
 
-We compare the result of these two approaches and the results are shown in Figure \ref{fig_col_cmp} and Figure \ref{fig_shn_cmp}.
+We compare the result of these two approaches and the results are shown in Figure \ref{fig_col_cmp} and Figure \ref{fig_shn_cmp}. When setting same $\alpha / \beta$ trade-off between content and style and choosing same layers for style as well as content representation, neural style generate smoother output image than MSG-Net. It is still open to discuss because MSG-Net might generate the synthetic output as satisfying as the algorithm in \cite{Authors01} with more than 20 epochs.
 
 \begin{figure}[t]
 \begin{center}
@@ -256,8 +245,7 @@ We compare the result of these two approaches and the results are shown in Figur
 \end{figure}
 
 \subsection{Transfer Efficiency}
-It takes 17-29 seconds to complete style transfer with the algorithm in \cite{Authors01}, while it takes 1-3 seconds to style transfer with the MSG-Net in \cite{Authors04}. Apparently MSG-Net is more efficient than style transfer algorithm. 
-
+It takes 17-29 seconds to complete style transfer with the algorithm in \cite{Authors01}, while it takes 1-3 seconds to style transfer with the MSG-Net in \cite{Authors04}. MSG-Net is more efficient than style transfer algorithm, although it takes 50 minutes for training an epoch.
 
 
 \section{Clarity and Reproducibility}
